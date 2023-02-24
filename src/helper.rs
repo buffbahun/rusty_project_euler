@@ -27,6 +27,32 @@ pub fn sum_of_num(n: u32) -> u32 {
     ( (n + 1) * n ) / 2
 }
 
+pub fn fibo_gen_vec(init1: u32, init2: u32, limit: u32) -> Vec<u32> {
+    let mut series = vec![init1, init2];
+
+    series.sort();
+
+    fibo_gen_mut(&mut series, limit);
+
+    series
+}
+
+pub fn fibo_gen_mut(series: &mut Vec<u32>, limit: u32) {
+    if series.len() < 2 {
+        panic!("Pass two states for fibonacci series.");
+    }
+    let last_elm = series.get(series.len() - 1).unwrap();
+    let second_last_elm = series.get(series.len() - 2).unwrap();
+    let sum = last_elm + second_last_elm;
+
+    if sum >= limit {
+        return;
+    } else {
+        series.push(sum);
+        fibo_gen_mut(series, limit)
+    }
+}
+
 // unit test functions --------------------
 #[test]
 fn hcf_test1() {
@@ -51,5 +77,10 @@ fn hcf_test4() {
 
 #[test]
 fn hcf_test5() {
-    assert_eq!(1, hcf(6, 19));
+    assert_eq!(1, hcf(19, 6));
+}
+
+#[test]
+fn fibo_gen_test1() {
+    assert_eq!(vec![1, 2, 3, 5, 8, 13, 21, 34, 55, 89], fibo_gen_vec(2, 1, 90));
 }
