@@ -53,6 +53,45 @@ pub fn fibo_gen_mut(series: &mut Vec<u32>, limit: u32) {
     }
 }
 
+pub fn is_prime(num: u64) -> bool {
+    if num < 2 {
+        return false;
+    }
+
+    for divisor in 2..num {
+        if num % divisor == 0 {
+            return false;
+        }
+        if divisor >= num / divisor {
+            break;
+        }
+    }
+
+    true
+}
+
+pub fn prime_factors_vec(num: u64) -> Vec<u64> {
+    let mut factors: Vec<u64> = Vec::new();
+
+    prime_factors_mut(&mut factors, num);
+
+    factors
+}
+
+pub fn prime_factors_mut(factors: &mut Vec<u64>, num: u64) {
+    if is_prime(num) && !factors.contains(&num) {
+        factors.push(num);
+        return;
+    }
+
+    for divisor in 2..num {
+        if is_prime(divisor) && num % divisor == 0 {
+           if !factors.contains(&divisor) {factors.push(divisor)}
+           return prime_factors_mut(factors, num / divisor);
+        }
+    }
+}
+
 // unit test functions --------------------
 #[test]
 fn hcf_test1() {
@@ -83,4 +122,46 @@ fn hcf_test5() {
 #[test]
 fn fibo_gen_test1() {
     assert_eq!(vec![1, 2, 3, 5, 8, 13, 21, 34, 55, 89], fibo_gen_vec(2, 1, 90));
+}
+
+#[test]
+fn prime_check_test1() {
+    assert_eq!(false, is_prime(0));
+}
+#[test]
+fn prime_check_test2() {
+    assert_eq!(true, is_prime(2));
+}
+#[test]
+fn prime_check_test3() {
+    assert_eq!(true, is_prime(3));
+}
+#[test]
+fn prime_check_test4() {
+    assert_eq!(false, is_prime(77));
+}
+#[test]
+fn prime_check_test5() {
+    assert_eq!(true, is_prime(11));
+}
+
+#[test]
+fn prime_factors_test1() {
+    assert_eq!(vec![] as Vec<u64>, prime_factors_vec(0));
+}
+#[test]
+fn prime_factors_test2() {
+    assert_eq!(vec![] as Vec<u64>, prime_factors_vec(1));
+}
+#[test]
+fn prime_factors_test3() {
+    assert_eq!(vec![2], prime_factors_vec(2));
+}
+#[test]
+fn prime_factors_test4() {
+    assert_eq!(vec![2], prime_factors_vec(4));
+}
+#[test]
+fn prime_factors_test5() {
+    assert_eq!(vec![5, 7, 13, 29], prime_factors_vec(13195));
 }
