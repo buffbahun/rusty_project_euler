@@ -92,6 +92,31 @@ pub fn prime_factors_mut(factors: &mut Vec<u64>, num: u64) {
     }
 }
 
+pub fn is_palindrome(num: u64) -> bool {
+    let mut digits: Vec<u64> = Vec::new();
+    num_to_digits(&mut digits, num);
+
+    let iterations = ( digits.len() / 2 ) + ( digits.len() % 2 );
+
+    for i in 0..iterations {
+        if digits[i] != digits[digits.len() - i - 1] {
+            return false
+        }
+    }
+    
+    true
+}
+
+pub fn num_to_digits(digits: &mut Vec<u64>, num: u64) {
+    digits.push(num % 10);
+    if num / 10 <= 0 {
+        digits.reverse();
+        return
+    } else {
+        num_to_digits(digits, num / 10)
+    }
+}
+
 // unit test functions --------------------
 #[test]
 fn hcf_test1() {
@@ -164,4 +189,54 @@ fn prime_factors_test4() {
 #[test]
 fn prime_factors_test5() {
     assert_eq!(vec![5, 7, 13, 29], prime_factors_vec(13195));
+}
+
+#[test]
+fn num_to_digits_test1() {
+    let mut digits: Vec<u64> = Vec::new();
+    let num = 0;
+    num_to_digits(&mut digits, num);
+    assert_eq!(vec![0], digits);
+}
+#[test]
+fn num_to_digits_test2() {
+    let mut digits: Vec<u64> = Vec::new();
+    let num = 9;
+    num_to_digits(&mut digits, num);
+    assert_eq!(vec![9], digits);
+}
+#[test]
+fn num_to_digits_test3() {
+    let mut digits: Vec<u64> = Vec::new();
+    let num = 123456;
+    num_to_digits(&mut digits, num);
+    assert_eq!(vec![1,2,3,4,5,6], digits);
+}
+#[test]
+fn num_to_digits_test4() {
+    let mut digits: Vec<u64> = Vec::new();
+    let num = 1230045000;
+    num_to_digits(&mut digits, num);
+    assert_eq!(vec![1,2,3,0,0,4,5,0,0,0], digits);
+}
+
+#[test]
+fn is_palindrom_test1() {
+    assert_eq!(true, is_palindrome(0));
+}
+#[test]
+fn is_palindrom_test2() {
+    assert_eq!(false, is_palindrome(13));
+}
+#[test]
+fn is_palindrom_test3() {
+    assert_eq!(true, is_palindrome(22));
+}
+#[test]
+fn is_palindrom_test4() {
+    assert_eq!(true, is_palindrome(12321));
+}
+#[test]
+fn is_palindrom_test5() {
+    assert_eq!(false, is_palindrome(123421));
 }
