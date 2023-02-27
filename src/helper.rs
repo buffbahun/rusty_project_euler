@@ -70,6 +70,18 @@ pub fn is_prime(num: u64) -> bool {
     true
 }
 
+pub fn prime_gen(num_to: u64) -> Vec<u64> {
+    let mut primes: Vec<u64> = Vec::new();
+
+    for num in 2..=num_to {
+        if is_prime(num) {
+            primes.push(num);
+        }
+    }
+
+    primes
+}
+
 pub fn prime_factors_vec(num: u64) -> Vec<u64> {
     let mut factors: Vec<u64> = Vec::new();
 
@@ -239,4 +251,21 @@ fn is_palindrom_test4() {
 #[test]
 fn is_palindrom_test5() {
     assert_eq!(false, is_palindrome(123421));
+}
+
+#[test]
+fn prime_gen_test1() {
+    assert_eq!(vec![] as Vec<u64>, prime_gen(1));
+}
+#[test]
+fn prime_gen_test2() {
+    assert_eq!(vec![2,3,5,7], prime_gen(10));
+}
+#[test]
+fn prime_gen_test3() {
+    assert_eq!(vec![2,3,5,7,11,13,17,19], prime_gen(20));
+}
+#[test]
+fn prime_gen_test4() {
+    assert_eq!(vec![2], prime_gen(2));
 }
