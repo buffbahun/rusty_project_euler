@@ -82,6 +82,25 @@ pub fn prime_gen(num_to: u64) -> Vec<u64> {
     primes
 }
 
+pub fn prime_gen_nth(nth: u64) -> Vec<u64> {
+    let mut primes: Vec<u64> = Vec::new();
+    
+    let mut num: u64 = 2;
+
+    loop {
+        if primes.len() as u64 >= nth {
+            break;
+        }
+        if is_prime(num) {
+            primes.push(num);
+        }
+
+        num += 1;
+    }
+
+    primes
+}
+
 pub fn prime_factors_vec(num: u64) -> Vec<u64> {
     let mut factors: Vec<u64> = Vec::new();
 
