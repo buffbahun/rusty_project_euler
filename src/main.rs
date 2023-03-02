@@ -10,6 +10,7 @@ fn main() {
     println!("solution 5: {}", soln5::soln_5(20));
     println!("solution 6: {}", soln6::soln_6(100));
     println!("solution 7: {}", soln7::soln_7(10001));
+    println!("solution 8: {}", soln8::soln_8(13));
 
     // let start = Instant::now();
     // helper::prime_gen(1000000);
