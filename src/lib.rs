@@ -7,4 +7,5 @@ pub mod soln5;
 pub mod soln6;
 pub mod soln7;
 pub mod soln8;
+pub mod soln9;
 
